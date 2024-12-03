@@ -1,0 +1,185 @@
+﻿@using InternetBanking.Application.Enums
+@using InternetBanking.Domain.Entities
+@using InternetBanking.Domain.Enums
+@model CustomerSaveViewModel
+@{
+    Layout = "_layoutLogin";
+}
+<div class="container vh-100 p-4 " style="padding:20px; margin-bottom:29px;">
+    <div class="row h-100 d-flex justify-content-center align-items-center">
+        <div class="col-lg-4 col-sm-8">
+            <div class="card">
+                <div class="card-header text-center bg-success">
+                    <h3 class="text-white"><i class="bi bi-person"></i> Edit User</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+
+                        <div class="form-group mt-3">
+                            <div class='form-floating'>
+                                <input type="text" class="form-control" asp-for="Name" placeholder="Usuario">
+                                <label class="control-label">Nombre</label>
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class='form-floating'>
+                                <input type="text" class="form-control" asp-for="LastName" placeholder="LastName">
+                                <label class="control-label">LastName</label>
+                                <span class="text-danger" asp-validation-for="LastName"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class='form-floating'>
+                                <input type="text" class="form-control" asp-for="Username" placeholder="Username">
+                                <label class="control-label">Username</label>
+                                <span class="text-danger" asp-validation-for="Username"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class='form-floating'>
+                                <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+                                <label class="control-label">Email</label>
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class='form-floating'>
+                                <input type="email" class="form-control" asp-for="Password" placeholder="Password">
+                                <label class="control-label">Password</label>
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class='form-floating'>
+                                <input type="email" class="form-control" asp-for="ConfirmPassword" placeholder="ConfirmPassword">
+                                <label class="control-label">ConfirmPassword</label>
+                                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                            </div>
+                        </div>
+                        <!--Agregar Producto-->
+                        <div class="form-add-product">
+                            <form asp-action="AddProduct" method="post">
+                                <input type="hidden" name="CustomerId" value="@Model.Id" />
+                                <div class="products-input">
+                                    <div class="amount-form">
+                                        <label class="control-label">Monto:</label>
+                                        <input type="number" name="Amount" class="form-control" />
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label class="control-label mb-2">Seleccionar Cuenta: </label>
+                                        <select name="ProductType" class="form-control" id="product-Select">
+                                            <option>Selecciona Producto</option>
+                                            @foreach (var productType in Enum.GetValues(typeof(ProductType)).Cast<ProductType>())
+                                            {
+                                                <option value="@productType">@productType.ToString()</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="amount-form" style="display:none" id="limit-input-container">
+                                        <label class="control-label">Limite:</label>
+                                        <input type="number" name="Limit" class="form-control" id="limit-input" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="btn-Add-Product">Agregar Producto</button>
+                            </form>
+                        </div>
+
+                        <!--Product Section-->
+                        @if (Model.Products.Count > 0)
+                        {
+                            <div class="form-group mt-3">
+                                @{
+                                    foreach (var product in @Model.Products)
+                                    {
+                                        if (product is SavingsAccount savingProduct)
+                                        {
+                                            <div class="accountCard">
+                                                <div class="numberAccount">
+                                                    <div>
+                                                        <span>
+                                                            Numero Cuenta:
+                                                        </span>
+                                                        <p>@savingProduct.IdentifierAccount</p>
+                                                    </div>
+                                                    <div class="accountAmount">
+                                                        <p> @savingProduct.Amount</p>
+                                                    </div>
+                                                </div>
+                                                @if (!savingProduct.IsMain)
+                                                {
+                                                    <div>
+                                                        <form class="deleteAmount" asp-action="DeleteProduct">
+                                                            <input type="hidden" name="Id" value="@savingProduct.Id" />
+                                                            <input type="hidden" name="ProductType" value="@savingProduct.ProductType" />
+                                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="AccountCard">
+                                                <div class="numberAccount">
+                                                    <div>
+                                                        <span>
+                                                            Numero Cuenta:
+                                                        </span>
+                                                        <p>@product.IdentifierAccount</p>
+                                                    </div>
+                                                    <div class="accountAmount">
+                                                        <span>Monto:</span>
+                                                        <p> @product.Amount.ToString("C")</p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <form class="deleteAmount" asp-action="DeleteProduct">
+                                                        <input type="hidden" name="Id" value="@product.Id" />
+                                                        <input type="hidden" name="ProductType" value="@product.ProductType" />
+                                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                    </form>
+                                                </div>
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        }
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a href="" class="btn btn-secondary">Volver</a>
+                            <button class="btnUpdate">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#product-Select").on("change", function (e) {
+        if ($(this).val() === "CreditCard") {
+            $("#limit-input-container").show();
+            $("#btn-Add-Product").prop("disabled", true);
+            $("#limit-input").on('input propertychange', function () {
+                if ($(this).val() <= 0) {
+                    $("#btn-Add-Product").prop("disabled", true);
+                } else {
+                    $("#btn-Add-Product").prop("disabled", false);
+                }
+            });
+        } else {
+            $("#limit-input-container").hide();
+            $("#btn-Add-Product").prop("disabled", false);
+        }
+    })
+</script>

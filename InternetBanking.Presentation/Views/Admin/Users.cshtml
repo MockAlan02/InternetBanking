@@ -1,0 +1,120 @@
+@model AdminUsersViewModel
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<style>
+    .scrollable {
+        /* max-height: 233px; @*Make this dynamic*@ */
+        max-height: 200px;
+        overflow-y: auto;
+    }
+</style>
+
+<div class="container">
+    <form class="mt-2" asp-action="Index">
+        <input name="FullName" type="text" id="FullName" class="form-control mb-3" placeholder="Search Users"
+               value="@(Model.Filters.FullName)">
+    </form>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Active Admins</h2>
+            <div class="scrollable">
+                @foreach (var user in Model.Users.ActiveAdmins)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@user.Name @user.LastName</h5>
+                            <p class="card-text">ID: @user.IdentificationCard</p>
+                            <p class="card-text">Created At: @user.CreatedAt</p>
+                            <p class="card-text">Updated At: @user.UpdatedAt</p>
+                            <button class="btn btn-warning" onclick="showModal('@user.Id', 'Deactivate')">Deactivate</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Inactive Admins</h2>
+            <div class="scrollable">
+                @foreach (var user in Model.Users.UnactiveAdmins)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@user.Name @user.LastName</h5>
+                            <p class="card-text">ID: @user.IdentificationCard</p>
+                            <p class="card-text">Created At: @user.CreatedAt</p>
+                            <p class="card-text">Updated At: @user.UpdatedAt</p>
+                            <button class="btn btn-success" onclick="showModal('@user.Id', 'Activate')">Activate</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h2>Active Customers</h2>
+            <div class="scrollable">
+                @foreach (var user in Model.Users.ActiveCustomers)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@user.Name @user.LastName</h5>
+                            <p class="card-text">ID: @user.IdentificationCard</p>
+                            <p class="card-text">Created At: @user.CreatedAt</p>
+                            <p class="card-text">Updated At: @user.UpdatedAt</p>
+                            <button class="btn btn-warning" onclick="showModal('@user.Id', 'Deactivate')">Deactivate</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Inactive Customers</h2>
+            <div class="scrollable">
+                @foreach (var user in Model.Users.UnactiveCustomers)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@user.Name @user.LastName</h5>
+                            <p class="card-text">ID: @user.IdentificationCard</p>
+                            <p class="card-text">Created At: @user.CreatedAt</p>
+                            <p class="card-text">Updated At: @user.UpdatedAt</p>
+                            <button class="btn btn-success" onclick="showModal('@user.Id', 'Activate')">Activate</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to <span id="modalAction"></span> this user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="#" id="confirmButton" class="btn btn-primary">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showModal(userId, action) {
+        document.getElementById('modalAction').textContent = action.toLowerCase();
+        document.getElementById('confirmButton').href = '@Url.Action("ToggleActive", "Admin")?userId=' + userId + '&activate=' + (action === 'Activate');
+        new bootstrap.Modal(document.getElementById('confirmationModal')).show();
+    }
+</script>

@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - InternetBanking.Presentation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/InternetBanking.Presentation.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+    <header class="bg-success g-0 fixed-top">
+        <h3 class="p-2 text-center g-0 m-0 text-white ">Funcionalidades del Cliente</h3>
+    </header>
+    <aside class="sidebar col-2 bg-success vh-100 position-fixed ">
+        <ul class="navbar-nav">
+            <li class="nav-item d-flex justify-content-center mt-5">
+                <a class="nav-link text-white btn btn-outline-primary border-0 w-100" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-gear-fill"></i> Home</a>
+            </li>
+            <li class="nav-item d-flex justify-content-center">
+                <a class="nav-link text-white btn btn-outline-primary border-0 w-100" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-cash-coin"></i> Pagos</a>
+            </li>
+            <li class="nav-item d-flex justify-content-center">
+                <a class="nav-link text-white btn btn-outline-primary border-0 w-100" asp-area="" asp-controller="Beneficiarie" asp-action="Index"><i class="bi bi-people-fill"></i> Beneficiarios</a>
+            </li>
+            <li class="nav-item d-flex justify-content-center">
+                <a class="nav-link text-white btn btn-outline-primary border-0 w-100" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-currency-dollar"></i> Avance</a>
+            </li>
+            <li class="nav-item d-flex justify-content-center">
+                <a class="nav-link text-white btn btn-outline-primary border-0 w-100" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-send-fill"></i> Transferencia</a>
+            </li>
+        </ul>
+    </aside>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+   
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

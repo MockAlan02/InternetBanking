@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "_layoutCliente";
+}
+
+
+
+<div class="container-fluid">
+    <div class=" col-3 offset-11">
+        <div class="row mt-5">
+            <div class=" mt-3 ">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCrearBeneficiario">
+                    <i class="bi bi-person-plus-fill"></i> Crear Beneficiario
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalCrearBeneficiario" tabindex="-1" role="dialog" aria-labelledby="modalCrearBeneficiarioLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center text-success" id="modalCrearBeneficiarioLabel">Crear Beneficiario</h5>
+                   
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCrearBeneficiario">
+                        <div class="form-group">
+                            <label for="numeroCuenta">Número de Cuenta</label>
+                            <input type="text" class="form-control" id="numeroCuenta" name="numeroCuenta" placeholder="Ingrese el número de cuenta">
+                        </div>
+                        <div class="form-group ms-auto">
+                            <button type="submit" class=" btn btn-success mt-3 ">Crear</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

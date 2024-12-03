@@ -1,0 +1,93 @@
+﻿@using InternetBanking.Application.Enums
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_LayoutLogin";
+}
+
+<div class="container vh-100">
+    <div class="row h-100 d-flex justify-content-center align-items-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center text-success"> <i class="bi bi-person-fill-add"></i> Registrar Usuario</h2>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="Name" class="form-control" placeholder="Nombre" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="LastName" class="form-control" placeholder="Apellido" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="Username" class="form-control" placeholder="Usuario" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="Email" class="form-control" placeholder="Correo" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="IdentificationCard" class="form-control" placeholder="Cedula" />
+                            <span asp-validation-for="IdentificationCard" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirmar Contraseña" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <select asp-for="UserType" id="usertype" class="form-control" asp-items="@(new SelectList(Enum.GetValues(typeof(UserType))))">
+                                <option value="">Seleccione un tipo de usuario</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mt-2" id="monto" style="display: none">
+                            <input asp-for="Amount" class="form-control" placeholder="Monto inicial" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mt-2 w-100">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $("#usertype").on("change", function () {
+                var selectedValue = $(this).val();
+                if (selectedValue == "Customer") {
+                    $("#monto").show();
+                } else {
+                    $("#monto").hide();
+                }
+            });
+
+            
+            $("#usertype").trigger("change");
+        });
+    </script>
+}

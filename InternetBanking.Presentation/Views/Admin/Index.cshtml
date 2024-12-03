@@ -1,0 +1,20 @@
+@model AdminIndexViewModel
+
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class="mt-4">
+    <h2>Indicadores</h2>
+    <ul>
+        <li>Transacciones realizadas
+            @Model.TotalTransactions (Total), @Model.DailyTransactions (Hoy)</li>
+        <li>Pagos realizados
+            @Model.DailyPayments (Hoy), @Model.TotalPayments (Total)</li>
+        <li>Cantidad de clientes activos y los inactivos:
+            @Model.ActiveClients (Activos), @Model.InactiveClients (Inactivos)</li>
+        <li>Cantidad de productos
+            @Model.TotalProducts</li>
+    </ul>
+</div>

@@ -1,0 +1,50 @@
+﻿@model PayCreditCardViewModel
+@{
+    Layout = "_LayoutPayment";
+}
+<div class="container mt-5 center-container">
+    <div class="bg-white content">
+        <h2 class="text-center mb-4">Realizar Pago</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <form class="paymentForm" asp-action="PayCreditCard">
+                    <div class="form-group">
+                        <label for="select1">Selecciona Tarjeta de credito</label>
+                        <select asp-for="CreditCardNumberAccount" class="form-control" id="select1">
+                            <option>Opción 1</option>
+                            <option>Opción 2</option>
+                            <option>Opción 3</option>
+                        </select>
+                        <span asp-validation-for="CreditCardNumberAccount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="select2">Selecciona Cuenta Ahorro</label>
+                        <select asp-for="SavingAccountNumber" class="form-control" id="select2">
+                            <option>Opción A</option>
+                            <option>Opción B</option>
+                            <option>Opción C</option>
+                        </select>
+                        <span asp-validation-for="SavingAccountNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Monto a pagar</label>
+                        <input type="number" id="Amount" class="form-control" asp-for="Amount" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <button type="submit" id="btnSubmit" class="btn btn-primary btn-block" disabled>Pagar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#Amount").on('propertychange input', function (e) {
+        if ($(this).val() > 0) {
+            $("#btnSubmit").prop("disabled", false)
+        } else {
+            $("#btnSubmit").prop("disabled", true)
+        }
+    });
+</script>

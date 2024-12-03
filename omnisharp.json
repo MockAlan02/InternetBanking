@@ -1,0 +1,5 @@
+{
+  "ImplementTypeOptions": {
+    "PropertyGenerationBehavior": "PreferAutoProperties"
+  }
+}
